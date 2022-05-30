@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import TaskManager from "./artifacts/contracts/TaskManager.sol/TaskManager.json";
 import Task from "./components/Task";
+import TaskList from "./components/TaskList";
 
 const App = () => {
   const [account, setAccount] = useState("");
@@ -50,9 +51,8 @@ const App = () => {
 
   return (
     <div>
-      <Task status={mockTasks[0].status} name={mockTasks[0].name} />
-      <Task status={mockTasks[1].status} name={mockTasks[1].name} />
-      <Task status={mockTasks[2].status} name={mockTasks[2].name} />
+      <h2>Task Manager</h2>
+      <TaskList tasks={mockTasks} />
     </div>
   );
 };
