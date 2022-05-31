@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import TaskManager from "./artifacts/contracts/TaskManager.sol/TaskManager.json";
 
-import TaskListNotDone from "./components/TaskListNotDone";
+import TaskNotDone from "./components/TaskNotDone";
 import TaskForm from "./components/TaskForm";
 import TaskInProgress from "./components/TasksInProgress";
+import TaskDone from "./components/TaskDone";
 
 const App = () => {
   const abi = TaskManager.abi;
@@ -54,14 +55,15 @@ const App = () => {
         abi,
         signer
       );
-      let task = await contract.createTask(name);
+      const task = await contract.createTask(name);
       await task.wait();
-      let tasks = await contract.getAllTasks();
-      setTasks(tasks);
+      const newTasks = await contract.getAllTasks();
+      setTasks(newTasks);
     }
   };
 
   const updateTaskStatus = async (index, status) => {
+    console.log(index);
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -70,10 +72,10 @@ const App = () => {
         abi,
         signer
       );
-      let newTask = await contract.updateTaskStatus(index, status);
+      const newTask = await contract.updateTaskStatus(index, status);
       await newTask.wait();
-      let tasks = await contract.getAllTasks();
-      setTasks(tasks);
+      const newTasks = await contract.getAllTasks();
+      setTasks(newTasks);
     }
   };
 
@@ -81,8 +83,9 @@ const App = () => {
     <div>
       <h2>Task Manager</h2>
       <TaskForm createTask={createTask} />
-      <TaskListNotDone tasks={tasks} updateTaskStatus={updateTaskStatus} />
+      <TaskNotDone tasks={tasks} updateTaskStatus={updateTaskStatus} />
       <TaskInProgress tasks={tasks} updateTaskStatus={updateTaskStatus} />
+      <TaskDone tasks={tasks} updateTaskStatus={updateTaskStatus} />
     </div>
   );
 };

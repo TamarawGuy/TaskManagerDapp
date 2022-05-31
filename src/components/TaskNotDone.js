@@ -1,18 +1,18 @@
 import Task from "./Task";
 
-const TaskInProgress = ({ tasks, updateTaskStatus }) => {
+const TaskNotDone = ({ tasks, updateTaskStatus }) => {
   return (
     <div>
-      <h3>Tasks in progress</h3>
+      <h3>Tasks not done</h3>
       <ul>
         {tasks
           .map((t, i) => ({ id: i, item: t }))
-          .filter((t) => t.item.status === 1)
+          .filter((t) => t.item.status === 0)
           .map((task, index) => (
             <li key={index}>
               <Task status={task.item.status} name={task.item.name} />
-              <button onClick={() => updateTaskStatus(task.id, 0)}>
-                Not Done
+              <button onClick={() => updateTaskStatus(task.id, 1)}>
+                In Progress
               </button>
               <button onClick={() => updateTaskStatus(task.id, 2)}>Done</button>
               <button>Update</button>
@@ -23,4 +23,4 @@ const TaskInProgress = ({ tasks, updateTaskStatus }) => {
   );
 };
 
-export default TaskInProgress;
+export default TaskNotDone;
