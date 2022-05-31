@@ -1,58 +1,70 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import TaskManager from "./artifacts/contracts/TaskManager.sol/TaskManager.json";
-import Task from "./components/Task";
+
 import TaskList from "./components/TaskList";
+import TaskForm from "./components/TaskForm";
 
 const App = () => {
+  const abi = TaskManager.abi;
   const [account, setAccount] = useState("");
-  const [contract, setContract] = useState(null);
-  const [name, setName] = useState("");
   const [tasks, setTasks] = useState([]);
 
-  const mockTasks = [
-    {
-      status: 0,
-      name: "Task 1",
-    },
-    {
-      status: 0,
-      name: "Task 2",
-    },
-    {
-      status: 0,
-      name: "Task 3",
-    },
-  ];
-
   useEffect(() => {
-    connect();
-  }, []);
+    const init = async () => {
+      connect();
+      getAllTasks();
+    };
+
+    init();
+  }, []); //eslint-disable-line
 
   const connect = async () => {
-    if (typeof window.ethereum !== "undefined") {
+    if (window.ethereum) {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
       });
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
       setAccount(accounts[0]);
-      setContract(
-        new ethers.Contract(
-          process.env.REACT_APP_CONTRACT_ADDRESS,
-          TaskManager.abi,
-          signer
-        )
-      );
     } else {
       console.log(`Please install metamask`);
+    }
+  };
+
+  const getAllTasks = async () => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      let result = await contract.getAllTasks();
+      setTasks(result);
+    }
+  };
+
+  const createTask = async (name) => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      let task = await contract.createTask(name);
+      await task.wait();
+      let tasks = await contract.getAllTasks();
+      setTasks(tasks);
     }
   };
 
   return (
     <div>
       <h2>Task Manager</h2>
-      <TaskList tasks={mockTasks} />
+      <TaskForm createTask={createTask} />
+      <TaskList tasks={tasks} />
     </div>
   );
 };

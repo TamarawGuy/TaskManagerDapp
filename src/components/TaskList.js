@@ -4,9 +4,13 @@ import Task from "./Task";
 const TaskList = ({ tasks }) => {
   return (
     <div>
-      {tasks.map((task) => (
-        <Task status={task.status} name={task.name} />
-      ))}
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            <Task status={task.status} name={task.name} />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
