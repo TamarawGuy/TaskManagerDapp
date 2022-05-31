@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import TaskManager from "./artifacts/contracts/TaskManager.sol/TaskManager.json";
 
-import TaskList from "./components/TaskList";
+import TaskListNotDone from "./components/TaskListNotDone";
 import TaskForm from "./components/TaskForm";
+import TaskInProgress from "./components/TasksInProgress";
 
 const App = () => {
   const abi = TaskManager.abi;
@@ -60,11 +61,28 @@ const App = () => {
     }
   };
 
+  const updateTaskStatus = async (index, status) => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      let newTask = await contract.updateTaskStatus(index, status);
+      await newTask.wait();
+      let tasks = await contract.getAllTasks();
+      setTasks(tasks);
+    }
+  };
+
   return (
     <div>
       <h2>Task Manager</h2>
       <TaskForm createTask={createTask} />
-      <TaskList tasks={tasks} />
+      <TaskListNotDone tasks={tasks} updateTaskStatus={updateTaskStatus} />
+      <TaskInProgress tasks={tasks} updateTaskStatus={updateTaskStatus} />
     </div>
   );
 };
