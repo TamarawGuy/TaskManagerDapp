@@ -1,9 +1,11 @@
 import React from "react";
 
-const Task = ({ status, name }) => {
+const Task = ({ status, ready, name }) => {
   return (
     <div>
-      {name} <span>{`->`}</span> {status}
+      <span>
+        Status: {status} Ready: {ready} Name: {name}
+      </span>
     </div>
   );
 };

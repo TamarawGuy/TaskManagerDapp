@@ -63,7 +63,6 @@ const App = () => {
   };
 
   const updateTaskStatus = async (index, status) => {
-    console.log(index);
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -79,13 +78,60 @@ const App = () => {
     }
   };
 
+  const updateTaskName = async (index, name) => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      const newTask = await contract.updateTaskName(index, name);
+      await newTask.wait();
+      const newTasks = await contract.getAllTasks();
+      setTasks(newTasks);
+    }
+  };
+
+  const updateTaskReady = async (index, ready) => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(
+        process.env.REACT_APP_CONTRACT_ADDRESS,
+        abi,
+        signer
+      );
+      const newTask = await contract.updateTaskReady(index, ready);
+      await newTask.wait();
+      const newTasks = await contract.getAllTasks();
+      setTasks(newTasks);
+    }
+  };
+
   return (
     <div>
       <h2>Task Manager</h2>
       <TaskForm createTask={createTask} />
-      <TaskNotDone tasks={tasks} updateTaskStatus={updateTaskStatus} />
-      <TaskInProgress tasks={tasks} updateTaskStatus={updateTaskStatus} />
-      <TaskDone tasks={tasks} updateTaskStatus={updateTaskStatus} />
+      <TaskNotDone
+        tasks={tasks}
+        updateTaskStatus={updateTaskStatus}
+        updateTaskName={updateTaskName}
+        updateTaskReady={updateTaskReady}
+      />
+      <TaskInProgress
+        tasks={tasks}
+        updateTaskStatus={updateTaskStatus}
+        updateTaskName={updateTaskName}
+        updateTaskReady={updateTaskReady}
+      />
+      <TaskDone
+        tasks={tasks}
+        updateTaskStatus={updateTaskStatus}
+        updateTaskName={updateTaskName}
+        updateTaskReady={updateTaskReady}
+      />
     </div>
   );
 };
