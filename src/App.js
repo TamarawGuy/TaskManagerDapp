@@ -113,6 +113,7 @@ const App = () => {
   return (
     <div>
       <h2>Task Manager</h2>
+      <h3>{account}</h3>
       <TaskForm createTask={createTask} />
       <TaskNotDone
         tasks={tasks}
