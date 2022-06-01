@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import styled from "styled-components";
 import TaskManager from "./artifacts/contracts/TaskManager.sol/TaskManager.json";
 
 import TaskNotDone from "./components/TaskNotDone";
@@ -7,6 +8,22 @@ import TaskForm from "./components/TaskForm";
 import TaskInProgress from "./components/TasksInProgress";
 import TaskDone from "./components/TaskDone";
 import Header from "./components/Header";
+
+const Container = styled.div`
+  width: 100%;
+  height: 100vh;
+  background: rgb(2, 30, 100);
+  background: linear-gradient(
+    180deg,
+    rgba(2, 30, 100, 1) 0%,
+    rgba(44, 110, 240, 0.7680205871411064) 55%,
+    rgba(0, 142, 255, 1) 100%
+  );
+`;
+
+const TaskContainer = styled.div`
+  display: flex;
+`;
 
 const App = () => {
   const abi = TaskManager.abi;
@@ -112,28 +129,30 @@ const App = () => {
   };
 
   return (
-    <div>
+    <Container>
       <Header account={account} />
       <TaskForm createTask={createTask} />
-      <TaskNotDone
-        tasks={tasks}
-        updateTaskStatus={updateTaskStatus}
-        updateTaskName={updateTaskName}
-        updateTaskReady={updateTaskReady}
-      />
-      <TaskInProgress
-        tasks={tasks}
-        updateTaskStatus={updateTaskStatus}
-        updateTaskName={updateTaskName}
-        updateTaskReady={updateTaskReady}
-      />
-      <TaskDone
-        tasks={tasks}
-        updateTaskStatus={updateTaskStatus}
-        updateTaskName={updateTaskName}
-        updateTaskReady={updateTaskReady}
-      />
-    </div>
+      <TaskContainer>
+        <TaskNotDone
+          tasks={tasks}
+          updateTaskStatus={updateTaskStatus}
+          updateTaskName={updateTaskName}
+          updateTaskReady={updateTaskReady}
+        />
+        <TaskInProgress
+          tasks={tasks}
+          updateTaskStatus={updateTaskStatus}
+          updateTaskName={updateTaskName}
+          updateTaskReady={updateTaskReady}
+        />
+        <TaskDone
+          tasks={tasks}
+          updateTaskStatus={updateTaskStatus}
+          updateTaskName={updateTaskName}
+          updateTaskReady={updateTaskReady}
+        />
+      </TaskContainer>
+    </Container>
   );
 };
 

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
   width: 100%;
+  background-color: #0d4dca;
 `;
 
 const Wrapper = styled.div`
@@ -14,22 +15,25 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.form`
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const Input = styled.input`
+  width: 70%;
   padding: 5px;
   margin-right: 10px;
+  border: none;
 `;
 
 const Button = styled.button`
-  width: 100%;
+  /* width: 100%; */
   padding: 8px 10px;
   border: none;
   border-radius: 6px;
-  background-color: #677ce2;
+  background-color: #021e64;
   color: #ffffff;
   cursor: pointer;
 `;
