@@ -6,6 +6,7 @@ import TaskNotDone from "./components/TaskNotDone";
 import TaskForm from "./components/TaskForm";
 import TaskInProgress from "./components/TasksInProgress";
 import TaskDone from "./components/TaskDone";
+import Header from "./components/Header";
 
 const App = () => {
   const abi = TaskManager.abi;
@@ -112,8 +113,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Task Manager</h2>
-      <h3>{account}</h3>
+      <Header account={account} />
       <TaskForm createTask={createTask} />
       <TaskNotDone
         tasks={tasks}
