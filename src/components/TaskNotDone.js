@@ -61,7 +61,6 @@ const TaskNotDone = ({
   updateTaskName,
   updateTaskReady,
 }) => {
-  const [show, setShow] = useState(true);
   const [text, setText] = useState("");
 
   const updateNameAndReady = (index, ready, name) => {

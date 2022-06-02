@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
-
+require("dotenv").config();
+require("hardhat-gas-reporter");
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 /* eslint-disable */
@@ -23,8 +24,9 @@ module.exports = {
     artifacts: "./src/artifacts",
   },
   networks: {
-    hardhat: {
-      chainId: 1337,
+    rinkeby: {
+      url: process.env.INFURA_KEY,
+      accounts: [process.env.PRIVATE_KEY],
     },
   },
 };

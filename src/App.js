@@ -55,7 +55,7 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
-        process.env.REACT_APP_CONTRACT_ADDRESS,
+        "0x1383Df4d27c4E539EB4ceb6df256EFec883CEFd9",
         abi,
         signer
       );
@@ -69,7 +69,7 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
-        process.env.REACT_APP_CONTRACT_ADDRESS,
+        "0x1383Df4d27c4E539EB4ceb6df256EFec883CEFd9",
         abi,
         signer
       );
@@ -85,7 +85,7 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
-        process.env.REACT_APP_CONTRACT_ADDRESS,
+        "0x1383Df4d27c4E539EB4ceb6df256EFec883CEFd9",
         abi,
         signer
       );
@@ -101,7 +101,7 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
-        process.env.REACT_APP_CONTRACT_ADDRESS,
+        "0x1383Df4d27c4E539EB4ceb6df256EFec883CEFd9",
         abi,
         signer
       );
@@ -117,7 +117,7 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
       const contract = new ethers.Contract(
-        process.env.REACT_APP_CONTRACT_ADDRESS,
+        "0x1383Df4d27c4E539EB4ceb6df256EFec883CEFd9",
         abi,
         signer
       );
